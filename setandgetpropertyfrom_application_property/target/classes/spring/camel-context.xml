@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="simple-route">
+            <from id="route-timer" uri="timer://foo?period=1000"/>
+            <setBody id="route-setBody">
+                <simple>Hello World from camel-context.xml</simple>
+            </setBody>
+		<!--first method to read value from application.property file 
+           <log message="my value from application.property from first method is: {{myprojectname}}"/>-->
+		<!--second method to read value from application.property file, if property myprojectname exist then it will print value else will print notFound -->
+		 <log message="my value from application.property from second method is: ${properties:myprojectname:notFound}"/>
+        </route>
+    </camelContext>
+</beans>

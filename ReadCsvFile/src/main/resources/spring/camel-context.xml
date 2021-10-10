@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="_route1">
+            <from id="_from1" uri="file:/Users/mustafamehdi/Desktop/Leaning_videos/ApacheCamel/ReadCsvFile/?fileName=myFile.csv&amp;noop=true"/>
+            <unmarshal id="_unmarshal1">
+                <csv/>
+            </unmarshal>
+            <split id="_split1">
+                <simple>${body}</simple>
+                <log id="_log1" message="mycsvrecords:${body}"/>
+            </split>
+        </route>
+    </camelContext>
+</beans>
