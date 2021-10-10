@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="simple-route">
+            <from id="route-timer" uri="timer://foo?period=1000"/>
+            <setBody id="route-setBody">
+                <constant>myroute</constant>
+            </setBody>
+			<setHeader headerName="myendpoint">
+			<simple>direct:${body}</simple>
+			</setHeader>
+			<toD uri="${header.myendpoint}"/>
+        </route>
+		<route>
+			<from uri="direct:myroute"/>
+			<log message="my route called dynamically"/>
+			<toD uri="${properties:myfavoriteRoute:not_found}"/>
+		</route>
+		<route>
+		<from uri="direct:myfavRoute"/>
+		<log message=" this route is called from value in application.properties"/>
+		</route>
+    </camelContext>
+</beans>

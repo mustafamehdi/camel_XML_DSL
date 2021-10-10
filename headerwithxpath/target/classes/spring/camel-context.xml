@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="simple-route">
+            <from id="_from1" uri="file:/Users/mustafamehdi/Desktop/Leaning_videos?fileName=myinput.xml&amp;noop=true"/>
+            <log id="_log1" message="my input message is: ${body} "/>
+            <setHeader headerName="myxpathdetails" id="_setHeader1">
+                <xpath>/families/family[2]/type/text()</xpath>
+            </setHeader>
+            <to id="_to1" uri="direct:myfirstroute"/>
+        </route>
+        <route id="_route1">
+            <from id="_from2" uri="direct:myfirstroute"/>
+            <log id="_log2" message="my header value is : ${header.myxpathdetails}"/>
+        </route>
+    </camelContext>
+</beans>
