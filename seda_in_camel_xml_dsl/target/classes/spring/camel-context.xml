@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="simple-route1">
+            <from id="route-timer" uri="timer://foo?period=10000"/>
+            <setBody id="route-setBody">
+                <simple>Main route message</simple>
+            </setBody>
+        	<to uri="seda:myroute2"/>
+			<log id="route-log1" message="Mesage_route1>>> ${body}"/>
+        </route>
+
+		<route id="route2">
+			<from uri="seda:myroute2?multipleConsumers=true"/>
+		    <log id="route-log2" message="Mesage_route2>>> ${body}"/>
+		</route>
+		
+		<route id="route3">
+			<from uri="seda:myroute2?multipleConsumers=true"/>
+		    <log id="route-log3" message="Mesage_route3>>> ${body}"/>
+		</route>
+    </camelContext>
+</beans>
