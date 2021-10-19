@@ -7,18 +7,16 @@
             <setBody id="route-setBody">
                 <simple>Main route message</simple>
             </setBody>
-        	<to uri="seda:myroute2"/>
-			<log id="route-log1" message="Mesage_route1>>> ${body}"/>
+            <to id="_to1" uri="seda:myroute2"/>
+            <log id="route-log1" message="Mesage_route1>>> ${body}"/>
         </route>
-
-		<route id="route2">
-			<from uri="seda:myroute2?multipleConsumers=true"/>
-		    <log id="route-log2" message="Mesage_route2>>> ${body}"/>
-		</route>
-		
-		<route id="route3">
-			<from uri="seda:myroute2?multipleConsumers=true"/>
-		    <log id="route-log3" message="Mesage_route3>>> ${body}"/>
-		</route>
+        <route id="route2">
+            <from id="_from1" uri="seda:myroute2?multipleConsumers=true"/>
+            <log id="route-log2" message="Mesage_route2>>> ${body}"/>
+        </route>
+        <route id="route3">
+            <from id="_from2" uri="seda:myroute2?multipleConsumers=true"/>
+            <log id="route-log3" message="Mesage_route3>>> ${body}"/>
+        </route>
     </camelContext>
 </beans>
