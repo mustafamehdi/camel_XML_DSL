@@ -1,0 +1,9 @@
+Dear Viewer,
+
+
+This is camel Velocity component and this we can use to make template.
+This is very ${headers.type}. Try to use it.
+
+
+Cheers,
+${body}

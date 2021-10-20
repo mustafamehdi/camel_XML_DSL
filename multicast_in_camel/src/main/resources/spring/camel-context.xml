@@ -2,34 +2,33 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-		<onException>
-		<exception>java.lang.Exception</exception>
-		<handled>
-			<constant>true</constant>
-		</handled>
-		<log message="I am in exception and message is: ${body}"/>
-		</onException>
+        <onException>
+            <exception>java.lang.Exception</exception>
+            <handled>
+                <constant>true</constant>
+            </handled>
+            <log message="I am in exception and message is: ${body}"/>
+        </onException>
         <route id="simple-route">
             <from id="route-timer" uri="timer://foo?period=10000"/>
             <setBody id="route-setBody">
                 <simple>Hello World</simple>
             </setBody>
-			<multicast parallelProcessing="false" stopOnException="false">
-				<to uri="direct:secondRoute"/>
-				<to uri="direct:thirdRoute"/>
-			</multicast>
+            <multicast id="_multicast1" parallelProcessing="false" stopOnException="false">
+                <to id="_to1" uri="direct:secondRoute"/>
+                <to id="_to2" uri="direct:thirdRoute"/>
+            </multicast>
             <log id="route-log" message="I am after multicast in main route>>> ${body}"/>
         </route>
-
-		<route>
-			<from uri="direct:secondRoute"/>
-			<throwException exceptionType="java.lang.Exception" message="I am failed :("/>
-			<log message="I am in second route and I received: ${body} "/>
-		</route>
-		
-		<route>
-			<from uri="direct:thirdRoute"/>
-			<log message="I am in third route I received: ${body}"/>
-		</route>
+        <route id="_route1">
+            <from id="_from1" uri="direct:secondRoute"/>
+            <throwException exceptionType="java.lang.Exception"
+                id="_throwException1" message="I am failed :("/>
+            <log id="_log1" message="I am in second route and I received: ${body} "/>
+        </route>
+        <route id="_route2">
+            <from id="_from2" uri="direct:thirdRoute"/>
+            <log id="_log2" message="I am in third route I received: ${body}"/>
+        </route>
     </camelContext>
 </beans>
