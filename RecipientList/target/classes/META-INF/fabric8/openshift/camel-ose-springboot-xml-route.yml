@@ -1,0 +1,21 @@
+---
+apiVersion: "route.openshift.io/v1"
+kind: "Route"
+metadata:
+  annotations:
+    fabric8.io/git-commit: "f5aa60c61d0ea55e3a70f1276a37b7fb1e08d2c0"
+    fabric8.io/git-branch: "master"
+    fabric8.io/git-url: "https://github.com/mustafamehdi/camel_xml_dsl.git"
+  labels:
+    expose: "true"
+    app: "camel-ose-springboot-xml"
+    provider: "fabric8"
+    version: "1.0.0-SNAPSHOT"
+    group: "org.mycompany"
+  name: "camel-ose-springboot-xml"
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: "Service"
+    name: "camel-ose-springboot-xml"

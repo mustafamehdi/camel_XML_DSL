@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
+    <bean class="org.mycompany.SetDestinations" id="mydestbean"/>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="simple-route">
+            <from id="route-timer" uri="timer://foo?period=10000"/>
+            <setBody id="route-setBody">
+                <simple>Hello World</simple>
+            </setBody>
+            <process id="_process1" ref="mydestbean"/>
+            <recipientList id="_recipientList1">
+                <header>mydestinations</header>
+            </recipientList>
+            <log id="route-log1" message=">>> ${body}"/>
+        </route>
+        <route id="_route1">
+            <from id="_from1" uri="direct:secondRoute"/>
+            <log id="route-log2" message="I am in second route>>> ${body}"/>
+        </route>
+        <route id="_route2">
+            <from id="_from2" uri="direct:thirdRoute"/>
+            <log id="route-log3" message="I am in third route>>> ${body}"/>
+        </route>
+    </camelContext>
+</beans>

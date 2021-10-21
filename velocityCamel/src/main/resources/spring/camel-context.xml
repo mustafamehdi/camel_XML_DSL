@@ -7,10 +7,10 @@
             <setBody id="route-setBody">
                 <simple>ApacheCamel</simple>
             </setBody>
-			<setHeader headerName="type">
-			<constant>good</constant>
-			</setHeader>
-			<to uri="velocity:myemailtemplate.vm?contentCache=true"/>
+            <setHeader headerName="type" id="_setHeader1">
+                <constant>good</constant>
+            </setHeader>
+            <to id="_to1" uri="velocity:myemailtemplate.vm?contentCache=true"/>
             <log id="route-log" message="MyTeamplate>>> ${body}"/>
         </route>
     </camelContext>
