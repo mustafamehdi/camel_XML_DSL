@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring-2.23.3.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        
+	<restConfiguration component="restlet"/>
+    
+	<rest  path="/myroute">
+		<get consumes="text/xml" produces="application/xml" uri="/myoperation">
+		<to uri="direct:mywebserviceroute"/>
+	</get>	
+	</rest>
+
+		<route>
+		<from uri="direct:mywebserviceroute"/>
+			<log message="I received message "/>
+			<setBody>
+				<constant>Thanks!! I received your message</constant>
+			</setBody>
+		</route>
+    </camelContext>
+</beans>

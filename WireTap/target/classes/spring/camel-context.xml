@@ -7,13 +7,12 @@
             <setBody id="route-setBody">
                 <simple>Hello world this is my message</simple>
             </setBody>
-			<wireTap uri="direct:myOtherDestination"/>
+            <wireTap id="_wireTap1" uri="direct:myOtherDestination"/>
             <log id="route-log" message=">>> ${body}"/>
         </route>
-
-			<route>
-			<from uri="direct:myOtherDestination"/>
-			<to uri="log:mywholeExchange?showAll=true"/>
-			</route>
+        <route id="_route1">
+            <from id="_from1" uri="direct:myOtherDestination"/>
+            <to id="_to1" uri="log:mywholeExchange?showAll=true"/>
+        </route>
     </camelContext>
 </beans>
